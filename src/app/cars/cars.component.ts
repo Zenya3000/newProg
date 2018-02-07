@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarsService } from '../-service/cars.service';
 @Component({
   selector: 'app-cars',
@@ -7,18 +8,62 @@ import { CarsService } from '../-service/cars.service';
   providers: [ CarsService ]
 })
 export class CarsComponent implements OnInit {
+
+  complexForm : FormGroup;
+
   @Input() changingStatus
   cars;
+  liked = [];
   constructor(
-    private cc: CarsService
-  ) { }
-
+    private cc: CarsService,
+    fb: FormBuilder
+  ) { 
+    this.complexForm = fb.group({
+      'car': [null, Validators.required],
+      'price': [null, Validators.required],
+      'descr': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])]
+    })
+   }
+   
+  submitForm(value: any):void{
+    console.log('Reactive Form Data: ')
+    console.log(value);
+  }
   ngOnInit() {
     this.getCars();
+    
   }
   
   getCars(){
     this.cars = this.cc.getCars();
+    this.getLiked();
+  }
+  getLiked(){
+    console.log('cars', this.cars);
+    console.log('liked', this.liked);
+    for (let i = 0, b = 0; i < this.cc.getCars().length; i++) {
+      const like = this.cc.getCars()[i];
+      console.log('i', like);
+      if(like.liked == true){
+        this.liked[b] = like;
+        b++;
+      }
+
+    }
+    console.log("liked", this.liked);
+  }
+  addCar(marka, price, textarea){
+    let newID =  this.cars.length +1;
+    console.log('newID', newID);
+    let data = {
+      id: newID,
+      mark: marka.value,
+      price: '$'+price.value,
+      descr: textarea.value,
+      liked: false
+    }
+    this.cc.appData(data);
+    
   }
   change(data){
     // this.cc.changeStatus(data);
@@ -32,7 +77,7 @@ export class CarsComponent implements OnInit {
     this.cars[i].liked = data.liked;
     console.log(this.cars[0]);
   }
-
+  
   findInArr(key, arr, val){
     // console.log('!!!'+ arr[0][key])
     // console.log('!!!!!'+ val)

@@ -1,0 +1,24 @@
+<div class="row bot_line">
+  <div class="">
+    <div class="row">
+      <div class="col-md-4"><strong>{{mark}}</strong></div>
+      <div class="col-md-4">{{price}}</div>
+      <div class="col-md-2"><span>
+        <app-like
+        [like]="liked"
+        (changeLike)="check()"
+        ></app-like>
+      </span></div>
+      <div class="col-md-2">{{id}}</div>
+    </div>
+
+    
+    <div class="top_line">
+      <div class="col-md-12"><p>{{descr}}</p></div>
+    </div>
+  </div>
+  <!-- <span>{{mark}}</span>
+  <span>{{price}}</span>
+  <span>{{descr}}</span>
+  <span>{{liked}}</span> -->
+</div>

@@ -1,17 +1,58 @@
+<div class="row">
+  <div class="addAuto col-md-6">
+    <h3 class="col-md-12">Добавить авто</h3>
+    <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
 
-<div class="addAuto">
-  <h3>Добавить авто</h3>
-  <div><input type="text" #makra class="form-control"></div><br>
-  <div><textarea class="form-control" #textarea></textarea></div>
+      <div class="col-md-6 form-group" [ngClass]="{'has-error':!complexForm.controls['car'].valid && complexForm.controls['car'].touched}">
+        <input type="text" name="car" #marka class="form-control" placeholder="Марка машины" [formControl]="complexForm.controls['car']">
+        <div *ngIf="complexForm.controls['car'].hasError('required') && complexForm.controls['car'].touched" class="alert alert-danger" style="margin-top: 2px;">You must write a Car</div>
+      </div>
+
+      <div class="col-md-6 form-group" [ngClass]="{'has-error':!complexForm.controls['price'].valid && complexForm.controls['price'].touched}">
+        <input type="text" name="price" #price class="form-control" placeholder="Цена" [formControl]="complexForm.controls['price']">
+      </div>
+      <div class="col-md-12 form-group" [ngClass]="{'has-error':!complexForm.controls['descr'].valid && complexForm.controls['descr'].touched}">
+        <!-- <div class="alert alert-danger"  > -->
+          <textarea class="form-control" name="descr" #textarea placeholder="Описание" [formControl]="complexForm.controls['descr']"></textarea>
+          <div *ngIf="complexForm.controls['descr'].hasError('required') && complexForm.controls['descr'].touched" class="alert alert-danger" style="margin-top: 2px;">You must include description.</div>
+          <div *ngIf="complexForm.controls['descr'].hasError('minlength') && complexForm.controls['descr'].touched" class="alert alert-danger" style="margin-top: 2px;">Your description must be at least 5 characters long.</div>
+          <div *ngIf="complexForm.controls['descr'].hasError('maxlength') && complexForm.controls['descr'].touched" class="alert alert-danger" style="margin-top: 2px;">Your description cannot exceed 10 characters.</div>
+        <!-- </div>   -->
+      </div>
+      <div class="form-group col-md-12">
+        <button class="btn btn-success sendButton" [disabled]="!complexForm.valid"
+        (click)="addCar(marka, price, textarea)"
+        >Создать</button>
+      </div>
+    </form>
+  </div>
 </div>
 <hr>
-<app-car *ngFor="let car of cars; let i = index;"
-  [mark] = "car.mark"
-  [descr] = "car.descr"
-  [price] = "car.price"
-  [liked] = "car.liked"
-  [id] = "car.id"
-  [index] = "i"
-  (changeStatus) = "change($event)"
-  >
-</app-car>
+<div class="row">
+  <div class="col-md-8">
+    <h3>Все обьявления</h3>
+    <hr>
+    <app-car *ngFor="let car of cars; let i = index;"
+      [mark] = "car.mark"
+      [descr] = "car.descr"
+      [price] = "car.price"
+      [liked] = "car.liked"
+      [id] = "car.id"
+      [index] = "i"
+      (changeStatus) = "change($event)"
+      >
+    </app-car>
+  </div>
+  <div class="col-md-4">
+    <h3>Избранные</h3>
+    <hr>
+    <app-liked *ngFor="let like of liked; let i = index;"
+      [mark] = "like.mark"
+      [descr] = "like.descr"
+      [price] = "like.price"
+      [liked] = "like.liked"
+      [id] = "like.id"
+      [index] = "i"
+    ></app-liked>  
+  </div>
+</div>

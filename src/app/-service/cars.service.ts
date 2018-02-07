@@ -7,7 +7,7 @@ export class CarsService {
   constructor() { }
 
   getCars(){
-    return CARS;
+    return CARS.reverse();
   }
   appData(data){
     CARS.push(data);
