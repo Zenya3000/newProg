@@ -18,12 +18,5 @@ export class CarComponent implements OnInit {
   ngOnInit() {
   }
 
-  changeS(d){
-    let data = {
-      id: this.id,
-      liked: d
-    }
-    this.changeStatus.emit(data)
-    console.log("data from car", data);
-  }
+
 }

@@ -1,24 +1,21 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CarsService } from '../-service/cars.service';
-import { MODEL } from '../MODEL';
+import { CarsService } from '../../-service/cars.service';
+import { MODEL } from '../../MODEL';
 @Component({
-  selector: 'app-cars',
-  templateUrl: './cars.component.html',
-  styleUrls: ['./cars.component.sass'],
-  providers: [ CarsService ]
+  selector: 'app-addcar',
+  templateUrl: './addcar.component.html',
+  styleUrls: ['./addcar.component.sass'],
+  providers: [CarsService]
 })
-export class CarsComponent implements OnInit {
-
-  complexForm : FormGroup;
-
-  @Input() changingStatus
-  cars;
-  liked = [];
+export class AddcarComponent implements OnInit {
+  
   models = [];
+  cars;
+  complexForm : FormGroup;
   constructor(
-    private cc: CarsService,
-    fb: FormBuilder
+    private fb: FormBuilder,
+    private cs: CarsService
   ) { 
     this.complexForm = fb.group({
       // 'car': [null, Validators.required],
@@ -26,44 +23,24 @@ export class CarsComponent implements OnInit {
       'price': [null, Validators.required],
       'descr': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])]
     })
-   }
-   
-
- 
+  }
+  submitForm(value: any):void{
+    console.log('Reactive Form Data: ')
+    console.log(value);
+  }
   ngOnInit() {
-    this.getCars();
     this.getModels(MODEL);
+    this.cars = this.cs.getCars;
   }
-  ngOnChanges(){
-    
-  }
+
   getModels(MODEL){
     for (let i = 0; i < MODEL.length; i++) {
-      this.models[i] = MODEL[i].mark; 
-      
-    }
-    
-  }
-  getCars(){
-    this.cars = this.cc.getCars();
-    this.getLiked();
-  }
-
-  getLiked(){
-
-    for (let i = 0, b = 0; i < this.cc.getCars().length; i++) {
-      const like = this.cc.getCars()[i];
-      if(like.liked == true){
-        this.liked[b] = like;
-        b++;
-      }
-
+      this.models[i] = MODEL[i].mark;
     }
   }
-
-  addCar(marka, price, textarea, formSelect){
-    console.log('count', this.cars.length +1);
-    let newID =  this.cars.length +1;
+  addCar(price, textarea, formSelect){
+    console.log('bla', price.value, textarea.value, formSelect.activeOption.text);
+    let newID =  this.cs.getCars().length +1;
     let data = {
       id: newID,
       mark: formSelect.activeOption.text,
@@ -71,28 +48,12 @@ export class CarsComponent implements OnInit {
       descr: textarea.value,
       liked: false
     }
+    // console.log('data', data);
 
-    this.cc.appData(data);
+    this.cs.appData(data);
     
   }
-  change(data){
-    let i = this.findInArr('id', this.cars, data.id);
-    this.cars[i].liked = data.liked;
-
-  }
-  
-  findInArr(key, arr, val){
-    for (let i = 0; i < arr.length; i++) {
-      const el = arr[i];
-      if(val === el[key]){
-        return i;
-      }
-      return -1;
-    }
-  }
-
 public items = this.models;
-
 private value:any = {};
 private _disabledV:string = '0';
 private disabled:boolean = false;

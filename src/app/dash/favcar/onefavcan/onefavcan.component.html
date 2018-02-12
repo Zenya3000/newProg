@@ -1,0 +1,18 @@
+<p>
+  onefavcan works!
+  {{onecar.mark}}
+  {{onecar.price}}
+  {{onecar.id}}
+  {{onecar.liked}}
+  index:
+  {{index}}
+  <app-thumb
+    [liked]="onecar.liked"
+    [id]="onecar.id"
+    (newThumb)="newThumb($event)"
+  >
+    
+  </app-thumb>
+
+  <!-- {{id}} -->
+</p>

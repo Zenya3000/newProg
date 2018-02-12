@@ -1,0 +1,15 @@
+<p>
+  favcar works!
+</p>
+<app-onefavcan *ngFor="let l of liked; let i = index;"
+[onecar] = "l"
+[index] = "i"
+(checkTrue)="check($event)"
+(thumb)="checkThumb($event)"
+></app-onefavcan>
+<!-- *ngFor="let l of liked; let i = index;"
+[mark] = "l.mark"
+[descr] = "l.descr"
+[liked] = "l.liked"
+[id] = "l.id"
+[index] = "i" -->

@@ -1,0 +1,8 @@
+<p>
+{{id}} {{mark}} {{price}} {{liked}}        
+<app-selected
+  [selected]="liked"
+  (changeStat)="changeStat($event)"
+></app-selected>
+</p>
+<br>

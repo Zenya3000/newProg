@@ -1,0 +1,46 @@
+
+<app-addcar></app-addcar>
+<app-allcar
+  *ngFor="let car of cars; let i = index;"
+  [mark] = "car.mark"
+  [descr] = "car.descr"
+  [price] = "car.price"
+  [liked] = "car.liked"
+  [id] = "car.id"
+  [index] = "i"
+  (changeLike)="toChangeLike($event)"
+></app-allcar>
+<app-favcar
+  [cars]="cars"
+  [test]="this.cs.getCars()"
+></app-favcar>
+
+
+<!-- <div class="row">
+  <div class="col-md-8">
+    <h3>Все обьявления</h3>
+    <hr>
+    <app-car *ngFor="let car of cars; let i = index;"
+      [mark] = "car.mark"
+      [descr] = "car.descr"
+      [price] = "car.price"
+      [liked] = "car.liked"
+      [id] = "car.id"
+      [index] = "i"
+      (changeStatus) = "change($event)"
+      >
+    </app-car>
+  </div>
+  <div class="col-md-4">
+    <h3>Избранные</h3>
+    <hr>
+    <app-liked *ngFor="let like of liked; let i = index;"
+      [mark] = "like.mark"
+      [descr] = "like.descr"
+      [price] = "like.price"
+      [liked] = "like.liked"
+      [id] = "like.id"
+      [index] = "i"
+    ></app-liked>  
+  </div>
+</div> -->
