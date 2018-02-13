@@ -27,12 +27,6 @@ export class DashComponent implements OnInit, OnChanges {
     })
   }
   ngOnChanges(){
-
-    // this.getCars();
-    // this.getFavCars();
-    // this.cs.getCars();
-    // this.cs.getFavCars();
-    // this.toChangeLike(event);
   }
   ngOnInit() {
     this.getCars();
@@ -56,6 +50,9 @@ export class DashComponent implements OnInit, OnChanges {
   }
   toChangeLike(data){
     this.cs.changeStatus(data);
+    console.log('dashLiked', this.liked);
+    this.liked = this.cs.liked;
+    console.log('afterDashLiked', this.liked);
   }
   
 
